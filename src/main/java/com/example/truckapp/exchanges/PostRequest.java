@@ -39,8 +39,8 @@ public class PostRequest {
     private String shipperId;
 
     @NotNull
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private Date date ;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date date;
 
 
 }

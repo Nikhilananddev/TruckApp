@@ -15,29 +15,39 @@ public class LoadController {
     @Autowired
     LoadService loadService;
 
+
     @GetMapping("/load")
     public ResponseEntity<GetAllLoadResponse> getAllLoad() {
         GetAllLoadResponse getAllLoadResponse;
 
 
-          getAllLoadResponse=  loadService.getAllLoad();
+        getAllLoadResponse = loadService.getAllLoad();
 
-          if (getAllLoadResponse!=null)
-          {
-              return ResponseEntity.ok().body(getAllLoadResponse);
-          }
-
-
+        if (getAllLoadResponse != null) {
+            return ResponseEntity.ok().body(getAllLoadResponse);
+        }
 
 
         return ResponseEntity.badRequest().body(null);
     }
+
     @GetMapping("/load/{id}")
-    public ResponseEntity<GetResponse> getLoadById( @PathVariable("id") String id) {
+    public ResponseEntity<GetResponse> getLoadById(@PathVariable("id") Long id) {
         GetResponse getResponse;
-        if (id!=null)
-        {
-            getResponse=  loadService.getLoadById(id);
+        if (id != null) {
+            getResponse = loadService.getLoadById(id);
+            return ResponseEntity.ok().body(getResponse);
+        }
+
+
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    @GetMapping("/loads")
+    public ResponseEntity<GetAllLoadResponse> getLoadByShipperId(String id) {
+        GetAllLoadResponse getResponse;
+        if (id != null) {
+            getResponse = loadService.getLoadByShipperId(id);
             return ResponseEntity.ok().body(getResponse);
         }
 
@@ -50,8 +60,9 @@ public class LoadController {
 
         return ResponseEntity.badRequest().body("hello");
     }
+
     @PostMapping("/load")
-    public ResponseEntity<Response> addLoad( @RequestBody PostRequest postRequest) {
+    public ResponseEntity<Response> addLoad(@RequestBody PostRequest postRequest) {
 
         Response response;
 
@@ -64,27 +75,30 @@ public class LoadController {
 
             return ResponseEntity.ok().body(response);
         }
-//        if (postRequest!=null){
-//           response=  loadService.addLoad(postRequest);
-////             response=new Response("added","200",new Date());
-//            System.out.println("ControllerResponse    "+response);
-//            return ResponseEntity.ok().body(response);
-//        }
-//        System.out.println(postRequest.getDate());
+
 
         return ResponseEntity.badRequest().body(null);
     }
 
     @PutMapping("load/{id}")
-    public ResponseEntity<Response> updateLoad(@PathVariable("id") String id, PutRequest putRequest) {
+    public ResponseEntity<GetResponse> updateLoad(@PathVariable("id") Long id, @RequestBody PutRequest putRequest) {
 
+        if (putRequest != null) {
+            GetResponse getResponse = loadService.updateLoadById(id, putRequest);
+            return ResponseEntity.ok().body(getResponse);
+        }
 
         return ResponseEntity.badRequest().body(null);
     }
 
 
-    @DeleteMapping()
-    public ResponseEntity<Response> deleteLoad(String id) {
+    @DeleteMapping("load/{id}")
+    public ResponseEntity<Response> deleteLoad(@PathVariable("id") Long id) {
+
+        if (id != null) {
+            Response response = loadService.deleteLoadById(id);
+            return ResponseEntity.ok().body(response);
+        }
 
         return ResponseEntity.badRequest().body(null);
     }
@@ -92,15 +106,10 @@ public class LoadController {
     public boolean validRequest(PostRequest postRequest) {
 
 
-        if (postRequest.getLoadingPoint() != null && postRequest.getUnLoadingPoint() != null
-                && postRequest.getProductType() != null && postRequest.getTruckType()!= null
+        return postRequest.getLoadingPoint() != null && postRequest.getUnLoadingPoint() != null
+                && postRequest.getProductType() != null && postRequest.getTruckType() != null
                 && postRequest.getNumberOfTruck() > 0 && postRequest.getWeight() > 0
-                && postRequest.getShipperId() != null && postRequest.getDate() != null
-        ) {
-            return true;
-
-        }
-        return false;
+                && postRequest.getShipperId() != null && postRequest.getDate() != null;
     }
 }
 

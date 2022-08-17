@@ -27,17 +27,18 @@ public class LoadRepositoriesServiceImpl implements LoadRepositoriesService {
     Provider<ModelMapper> modelMapperProvider;
 
     @Override
-    public Load findLoadById(String id) {
+    public Load findLoadById(Long id) {
 
         try {
 
             ModelMapper modelMapper = modelMapperProvider.get();
             Optional<LoadEntity> loadEntity;
-            Load load;
-            loadEntity = loadRepositories.findLoadById(Long.valueOf(id));
-            load = modelMapper.map(loadEntity, Load.class);
+
+            loadEntity = loadRepositories.findLoadByLoadId(id);
+            Load load = modelMapper.map(loadEntity, Load.class);
             return load;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new LoadNotFoundException(e.getMessage());
         }
 
@@ -46,23 +47,21 @@ public class LoadRepositoriesServiceImpl implements LoadRepositoriesService {
     @Override
     public List<Load> findAllLoads() {
 
-        try{
-            ModelMapper modelMapper=modelMapperProvider.get();
+        try {
+            ModelMapper modelMapper = modelMapperProvider.get();
             List<Load> loadList = new ArrayList<>();
 
-        List<LoadEntity> loadEntityList = loadRepositories.findAll();
-            for (LoadEntity loadEntity:loadEntityList
-                 ) {
-           Load load =   modelMapper.map(loadEntity,Load.class);
-              loadList.add(load);
+            List<LoadEntity> loadEntityList = loadRepositories.findAll();
+            for (LoadEntity loadEntity : loadEntityList
+            ) {
+                Load load = modelMapper.map(loadEntity, Load.class);
+                loadList.add(load);
 
 
             }
             return loadList;
-    }
-        catch (Exception e)
-        {
-            throw  new LoadNotFoundException(e.getMessage());
+        } catch (Exception e) {
+            throw new LoadNotFoundException(e.getMessage());
         }
     }
 
@@ -114,12 +113,67 @@ public class LoadRepositoriesServiceImpl implements LoadRepositoriesService {
     }
 
     @Override
-    public Load updateLoadById(Long id, String loadingPoint, String unLoadingPoint, ProductType productType, TruckType truckType, int numberOfTruck, String comment, String shipperId, Date date) {
-        return null;
+    public Load updateLoadById(Long id, String loadingPoint, String unLoadingPoint, ProductType productType, TruckType truckType, int numberOfTruck, double weight, String comment, String shipperId, Date date) {
+
+        try {
+            ModelMapper modelMapper = modelMapperProvider.get();
+
+            Optional<LoadEntity> loadEntity
+                    = loadRepositories.findLoadByLoadId(id);
+            LoadEntity entity = loadEntity.get();
+
+            entity.setLoadingPoint(loadingPoint);
+            entity.setUnLoadingPoint(unLoadingPoint);
+            entity.setProductType(productType);
+            entity.setTruckType(truckType);
+            entity.setNumberOfTruck(numberOfTruck);
+            entity.setWeight(weight);
+            entity.setComment(comment);
+            entity.setShipperId(shipperId);
+            entity.setDate(date);
+
+            entity = loadRepositories.save(entity);
+            Load load = modelMapper.map(entity, Load.class);
+            return load;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LoadNotFoundException(e.getMessage());
+        }
+    }
+
+
+    @Override
+    public void deleteLoadById(Long id) {
+        try {
+            loadRepositories.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            throw new LoadNotFoundException(e.getMessage());
+
+        }
+
+
     }
 
     @Override
-    public void deleteLoadById(String id) {
+    public List<Load> findLoadByShipperId(String id) {
+
+        try {
+            ModelMapper modelMapper = modelMapperProvider.get();
+            List<Load> loads = new ArrayList<>();
+
+            Optional<List<LoadEntity>> loadEntities = loadRepositories.findLoadByShipperId(id);
+            List<LoadEntity> entities = loadEntities.get();
+            for (LoadEntity loadEntity : entities
+            ) {
+                loads.add(modelMapper.map(loadEntity, Load.class));
+            }
+            return loads;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LoadNotFoundException(e.getMessage());
+        }
 
     }
 }

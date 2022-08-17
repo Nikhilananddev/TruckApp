@@ -1,8 +1,8 @@
 package com.example.truckapp.exception;
 
-public class CannotSaveToDatabase  extends RuntimeException{
+public class CannotSaveToDatabase extends RuntimeException {
 
-    private  String message;
+    private String message;
 
     public CannotSaveToDatabase(String message) {
         this.message = message;

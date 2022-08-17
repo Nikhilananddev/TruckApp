@@ -9,35 +9,40 @@ import java.util.List;
 
 public interface LoadRepositoriesService {
 
-    public Load findLoadById(String id);
-    public List<Load>findAllLoads();
+    Load findLoadById(Long id);
 
-    public Load add(String loadingPoint,
-                    String unLoadingPoint,
-                    ProductType productType,
-                    TruckType truckType,
-                    int numberOfTruck,
-                    double weight,
-                    String comment,
-                    String shipperId,
-                    Date date);
+    List<Load> findAllLoads();
+
+    Load add(String loadingPoint,
+             String unLoadingPoint,
+             ProductType productType,
+             TruckType truckType,
+             int numberOfTruck,
+             double weight,
+             String comment,
+             String shipperId,
+             Date date);
 
 
-    public Load updateLoadById(Long id,
-                               String loadingPoint,
-                               String unLoadingPoint,
-                               ProductType productType,
-                               TruckType truckType,
-                               int numberOfTruck,
-                               String comment,
-                               String shipperId,
-                               Date date);
+    Load updateLoadById(Long id,
+                        String loadingPoint,
+                        String unLoadingPoint,
+                        ProductType productType,
+                        TruckType truckType,
+                        int numberOfTruck,
+                        double weight,
+                        String comment,
+                        String shipperId,
+                        Date date);
 
-    public void deleteLoadById(String id);
+    void deleteLoadById(Long id);
+
+    List<Load> findLoadByShipperId(String id);
 }
 
 /*
 * ***
+*
 *
 *
 *

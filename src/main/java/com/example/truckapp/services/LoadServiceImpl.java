@@ -19,22 +19,22 @@ public class LoadServiceImpl implements LoadService {
     @Autowired
     LoadRepositoriesService loadRepositoriesService;
 
+
     @Autowired
     Provider<ModelMapper> modelMapperProvider;
 
 
     @Override
-    public GetResponse getLoadById(String id) {
+    public GetResponse getLoadById(Long id) {
 
         try {
             GetResponse getResponse;
-           Load load;
+            Load load;
             load = loadRepositoriesService.findLoadById(id);
-            getResponse=new GetResponse(load);
+            getResponse = new GetResponse(load);
             return getResponse;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new LoadNotFoundException(e.getMessage());
         }
 
@@ -45,12 +45,11 @@ public class LoadServiceImpl implements LoadService {
         try {
             List<Load> loadList;
             loadList = loadRepositoriesService.findAllLoads();
-            GetAllLoadResponse getAllLoadResponse=new GetAllLoadResponse(loadList);
+            GetAllLoadResponse getAllLoadResponse = new GetAllLoadResponse(loadList);
             return getAllLoadResponse;
-        }
-        catch (Exception e)
-        {
-            throw  new LoadNotFoundException(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LoadNotFoundException(e.getMessage());
         }
     }
 
@@ -60,7 +59,7 @@ public class LoadServiceImpl implements LoadService {
         Response response;
 
         try {
-       load=loadRepositoriesService.add(
+            load = loadRepositoriesService.add(
                     postRequest.getLoadingPoint(),
                     postRequest.getUnLoadingPoint(),
                     postRequest.getProductType(),
@@ -71,29 +70,66 @@ public class LoadServiceImpl implements LoadService {
                     postRequest.getShipperId(),
                     postRequest.getDate());
 
-             if (load!=null)
-             {
-                response=new Response("added succesfull","200", new Date());
-                 System.out.println("service"+response);
+            if (load != null) {
+                response = new Response("added succesfull", "200", new Date());
+                System.out.println("service" + response);
                 return response;
 
-             }
-             else {
-                 throw  new CannotSaveToDatabase("cannot save");
-             }
+            } else {
+                throw new CannotSaveToDatabase("cannot save");
+            }
 
         } catch (Exception exception) {
-           throw  new CannotSaveToDatabase(exception.getMessage());
+            throw new CannotSaveToDatabase(exception.getMessage());
         }
     }
 
     @Override
-    public Response updateLoadById(PutRequest putRequest) {
-        return null;
+    public GetResponse updateLoadById(Long id, PutRequest putRequest) {
+        try {
+            GetResponse getResponse;
+            Load load = loadRepositoriesService.updateLoadById(id,
+                    putRequest.getLoadingPoint(),
+                    putRequest.getUnLoadingPoint(),
+                    putRequest.getProductType(),
+                    putRequest.getTruckType(),
+                    putRequest.getNumberOfTruck(),
+                    putRequest.getWeight(),
+                    putRequest.getComment(),
+                    putRequest.getShipperId(),
+                    putRequest.getDate());
+            getResponse = new GetResponse(load);
+            return getResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CannotSaveToDatabase(e.getMessage());
+        }
+
     }
 
     @Override
-    public Response deleteLoadById(String id) {
-        return null;
+    public Response deleteLoadById(Long id) {
+        try {
+            loadRepositoriesService.deleteLoadById(id);
+            Response response = new Response("delete succesfull", "200", new Date());
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new CannotSaveToDatabase(e.getMessage());
+        }
+    }
+
+    @Override
+    public GetAllLoadResponse getLoadByShipperId(String id) {
+        try {
+
+            List<Load> loadList;
+            loadList = loadRepositoriesService.findLoadByShipperId(id);
+            GetAllLoadResponse getAllLoadResponse = new GetAllLoadResponse(loadList);
+            return getAllLoadResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new LoadNotFoundException(e.getMessage());
+        }
     }
 }

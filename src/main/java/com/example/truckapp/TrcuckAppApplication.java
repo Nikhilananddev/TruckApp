@@ -12,14 +12,15 @@ import org.springframework.context.annotation.Scope;
 @SpringBootApplication
 public class TrcuckAppApplication implements CommandLineRunner {
 
-	@Autowired
-	LoadRepositories loadRepositories;
-	public static void main(String[] args) {
-		SpringApplication.run(TrcuckAppApplication.class, args);
-	}
+    @Autowired
+    LoadRepositories loadRepositories;
 
-	@Override
-	public void run(String... args) throws Exception {
+    public static void main(String[] args) {
+        SpringApplication.run(TrcuckAppApplication.class, args);
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
 
 //
 //		Date date = new Date();
@@ -50,8 +51,6 @@ public class TrcuckAppApplication implements CommandLineRunner {
 //		{
 //			System.out.println(e.getMessage());
 //		}
-
-
 
 
 //		/**
@@ -93,16 +92,16 @@ public class TrcuckAppApplication implements CommandLineRunner {
 ////		System.out.println("sizee"+loadEntity.getWeight() );
 //
 //		System.out.println();
-	}
+    }
 
-	/**
-	 * Fetches a ModelMapper instance.
-	 *
-	 * @return ModelMapper
-	 */
-	@Bean // Want a new obj every time
-	@Scope("prototype")
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    /**
+     * Fetches a ModelMapper instance.
+     *
+     * @return ModelMapper
+     */
+    @Bean // Want a new obj every time
+    @Scope("prototype")
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }

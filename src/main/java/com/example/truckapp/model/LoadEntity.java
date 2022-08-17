@@ -20,7 +20,7 @@ public class LoadEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    private Long id;
 
     @NotNull
     private String loadingPoint;
@@ -35,6 +35,7 @@ public class LoadEntity {
     private TruckType truckType;
 
     @NotNull
+
     private int numberOfTruck;
 
     @NotNull
@@ -46,7 +47,6 @@ public class LoadEntity {
     private String shipperId;
 
     @NotNull
-
-    @JsonFormat(pattern="dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date date;
 }

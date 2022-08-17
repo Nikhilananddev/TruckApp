@@ -5,11 +5,15 @@ import com.example.truckapp.exchanges.*;
 public interface LoadService {
 
 
-    public GetResponse getLoadById(String id);
-    public GetAllLoadResponse getAllLoad();
+    GetResponse getLoadById(Long id);
 
-    public Response addLoad(PostRequest postRequest);
-    public Response updateLoadById(PutRequest putRequest);
-    public Response deleteLoadById(String id);
+    GetAllLoadResponse getAllLoad();
 
+    Response addLoad(PostRequest postRequest);
+
+    GetResponse updateLoadById(Long id, PutRequest putRequest);
+
+    Response deleteLoadById(Long id);
+
+    GetAllLoadResponse getLoadByShipperId(String id);
 }
