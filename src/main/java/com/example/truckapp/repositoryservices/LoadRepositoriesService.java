@@ -9,7 +9,8 @@ import java.util.List;
 
 public interface LoadRepositoriesService {
 
-    public List<Load> findLoadById(String id);
+    public Load findLoadById(String id);
+    public List<Load>findAllLoads();
 
     public Load add(String loadingPoint,
                     String unLoadingPoint,
@@ -22,7 +23,7 @@ public interface LoadRepositoriesService {
                     Date date);
 
 
-    public Load updateLoadById(String id,
+    public Load updateLoadById(Long id,
                                String loadingPoint,
                                String unLoadingPoint,
                                ProductType productType,

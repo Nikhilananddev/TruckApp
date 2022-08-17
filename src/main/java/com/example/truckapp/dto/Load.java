@@ -2,6 +2,7 @@ package com.example.truckapp.dto;
 
 import com.example.truckapp.utils.ProductType;
 import com.example.truckapp.utils.TruckType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -44,5 +45,6 @@ public class Load {
     private String shipperId;
 
     @NotNull
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date date;
 }

@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
+import java.util.List;
+
 @AllArgsConstructor
-public class GetResponse {
-    Load load;
+@NoArgsConstructor
+@Data
+public class GetAllLoadResponse {
+    List<Load> loadList;
 }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface LoadRepositories extends JpaRepository<LoadEntity, String> {
-    public Optional<LoadEntity> findLoadById(String id);
+public interface LoadRepositories extends JpaRepository<LoadEntity, Long> {
+    public Optional<LoadEntity> findLoadById(Long id);
 
 }
