@@ -17,7 +17,6 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Load {
 
-    //    @JsonIgnore
     private Long id;
 
     @NotNull

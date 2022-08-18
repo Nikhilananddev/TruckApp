@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
+
 @SpringBootApplication
 public class TrcuckAppApplication implements CommandLineRunner {
 
@@ -18,6 +19,8 @@ public class TrcuckAppApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(TrcuckAppApplication.class, args);
     }
+
+
 
     @Override
     public void run(String... args) throws Exception {
